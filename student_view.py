@@ -101,6 +101,7 @@ def run_student_time_in():
     # IF user cancels
     if confirm != "y":
         print("  Time-In cancelled.")
+        input("  Press Enter to return to menu...")
         return
 
     # CALL validate_location to check if student is within campus
