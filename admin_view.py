@@ -52,3 +52,32 @@ def show_admin_dashboard():
         else:
             print("\n  [!] Invalid choice. Please enter 1, 2, or 3.")
 
+
+def run_admin_login():
+    print("\n" + "=" * 45)
+    print("       Teacher / Admin Login")
+    print("=" * 45)
+
+    attempt_count = 0
+
+    # LOOP until max login attempts are reached
+    while attempt_count < MAX_LOGIN_ATTEMPTS:
+        # INPUT username and password from admin
+        entered_username = input("  Username: ").strip()
+        entered_password = input("  Password: ").strip()
+
+        # CALL verify_admin_login with entered credentials
+        is_valid_login = verify_admin_login(entered_username, entered_password)
+
+        # IF login is valid, show the admin dashboard
+        if is_valid_login:
+            show_admin_dashboard()
+            return
+
+        # ELSE increment attempt count and show error
+        attempt_count += 1
+        remaining_attempts = MAX_LOGIN_ATTEMPTS - attempt_count
+        print(f"\n  ❌ Invalid credentials. {remaining_attempts} attempt(s) remaining.")
+
+    # IF all attempts are exhausted, lock access
+    print("\n  🔒 Too many failed attempts. Access locked.")
