@@ -48,3 +48,25 @@ def select_section():
 
         # ELSE show error and prompt again
         print("  [!] Invalid choice. Please try again.")
+
+
+def select_student_name(selected_section):
+    # LOAD the student list for the selected section
+    student_list = SECTION_STUDENT_LIST[selected_section]
+
+    # DISPLAY student names
+    print(f"\n  --- Select Your Name ({selected_section}) ---")
+    for index, student_name in enumerate(student_list, start=1):
+        print(f"  [{index}] {student_name}")
+
+    # INPUT name choice and validate
+    while True:
+        name_choice = input("  Enter your number: ").strip()
+
+        # IF valid choice, return the selected student name
+        if name_choice.isdigit() and 1 <= int(name_choice) <= len(student_list):
+            selected_student_name = student_list[int(name_choice) - 1]
+            return selected_student_name
+
+        # ELSE show error and prompt again
+        print("  [!] Invalid choice. Please try again.")
