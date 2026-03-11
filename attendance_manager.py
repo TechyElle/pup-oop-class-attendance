@@ -28,3 +28,29 @@ def record_time_in(student_name, selected_section, location_accuracy):
 
     # SHOW success message
     print(f"\n  ✅ Time In recorded for {student_name} at {new_record['time_in']}")
+
+def display_attendance_records():
+    # LOAD all records from the CSV file
+    attendance_records = load_attendance_from_csv()
+
+    # IF no records exist, notify and return early
+    if not attendance_records:
+        print("\n  [!] No attendance records found.")
+        return
+
+    # DISPLAY table header
+    print("\n" + "=" * 70)
+    print(f"  {'Student Name':<22} {'Section':<10} {'Date':<13} {'Time In':<10} {'Accuracy'}")
+    print("=" * 70)
+
+    # FOR each record, print its details in a formatted row
+    for record in attendance_records:
+        print(
+            f"  {record['student_name']:<22}"
+            f" {record['section']:<10}"
+            f" {record['date']:<13}"
+            f" {record['time_in']:<10}"
+            f" {record['location_accuracy']}"
+        )
+
+    print("=" * 70)
