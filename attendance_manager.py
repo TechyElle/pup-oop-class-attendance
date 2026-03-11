@@ -54,3 +54,34 @@ def display_attendance_records():
         )
 
     print("=" * 70)
+
+def display_attendance_by_section(selected_section):
+    # LOAD all records from file
+    all_records = load_attendance_from_csv()
+
+    # FILTER only the records matching the selected section
+    section_records = [
+        record for record in all_records
+        if record["section"] == selected_section
+    ]
+
+    # IF no records found for this section
+    if not section_records:
+        print(f"\n  [!] No records found for section: {selected_section}")
+        return
+
+    # DISPLAY filtered records in table format
+    print(f"\n  Attendance for Section: {selected_section}")
+    print("=" * 70)
+    print(f"  {'Student Name':<22} {'Date':<13} {'Time In':<10} {'Accuracy'}")
+    print("=" * 70)
+
+    for record in section_records:
+        print(
+            f"  {record['student_name']:<22}"
+            f" {record['date']:<13}"
+            f" {record['time_in']:<10}"
+            f" {record['location_accuracy']}"
+        )
+
+    print("=" * 70)
