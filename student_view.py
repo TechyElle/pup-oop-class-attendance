@@ -70,3 +70,46 @@ def select_student_name(selected_section):
 
         # ELSE show error and prompt again
         print("  [!] Invalid choice. Please try again.")
+
+
+def run_student_time_in():
+    print("\n" + "=" * 45)
+    print("         Student Time-In")
+    print("=" * 45)
+
+    # CALL select_section to get the student's section
+    selected_section = select_section()
+
+    # CALL select_student_name after section is chosen
+    selected_student_name = select_student_name(selected_section)
+
+    # CALL get_gps_location to acquire coordinates and accuracy
+    gps_result = get_gps_location()
+
+    # IF GPS failed, notify user and exit the function
+    if gps_result is None:
+        print("\n  [!] Could not obtain location. Please try again.")
+        return
+
+    current_latitude, current_longitude, location_accuracy = gps_result
+
+    # CONFIRM time-in before recording
+    print(f"\n  Student : {selected_student_name}")
+    print(f"  Section : {selected_section}")
+    confirm = input("\n  Confirm Time In? (y/n): ").strip().lower()
+
+    # IF user cancels
+    if confirm != "y":
+        print("  Time-In cancelled.")
+        return
+
+    # CALL validate_location to check if student is within campus
+    is_within_campus = validate_location(current_latitude, current_longitude)
+
+    # IF NOT within campus range, deny time-in
+    if not is_within_campus:
+        print("\n  ❌ You are not within campus range. Time-In denied.")
+        return
+
+    # CALL record_time_in to save the attendance record
+    record_time_in(selected_student_name, selected_section, location_accuracy)
